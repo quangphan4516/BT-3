@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Sản Phẩm</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f8;
+            color: #333;
+            margin: 0 auto;
+            padding: 20px;
+            max-width: 1200px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        /* Khung điều khiển: Tìm kiếm, Phân trang, Sắp xếp */
+        .controls {
+            margin-bottom: 25px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            justify-content: space-between;
+        }
+
+        input[type="text"], select, button {
+            padding: 10px 15px;
+            border: 1px solid #e1e4e8;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus, select:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+        }
+
+        button {
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0,123,255,0.2);
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0,123,255,0.3);
+        }
+
+        /* CSS Bảng */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        th {
+            background-color: #343a40;
+            color: white;
+            padding: 16px;
+            text-align: left;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 16px;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: middle;
+            color: #555;
+        }
+
+        /* Zebra striping hiện đại */
+        tbody tr:nth-child(even) {
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        tbody tr:hover {
+            background-color: #f1f3f5;
+        }
+
+        /* Hiển thị hình ảnh */
+        .img-container {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .product-img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid #eee;
+            transition: transform 0.2s;
+        }
+        
+        .product-img:hover {
+            transform: scale(1.1);
+        }
+
+        /* Phân trang phía dưới */
+        .pagination {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .pagination button {
+            background-color: white;
+            color: #333;
+            border: 1px solid #dee2e6;
+            min-width: 36px;
+            height: 36px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 10px;
+            box-shadow: none;
+        }
+        
+        .pagination button:hover {
+            background-color: #e9ecef;
+            color: #0056b3;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .pagination button.active {
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Danh Sách Sản Phẩm</h1>
+
+    <div class="controls">
+        <input type="text" id="searchInput" placeholder="Tìm theo tên sản phẩm..." oninput="handleSearch()">
+
+        <label>Hiển thị:</label>
+        <select id="pageSize" onchange="handlePageSizeChange()">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+        </select>
+
+        <button onclick="handleSort('price', 'asc')">Giá tăng</button>
+        <button onclick="handleSort('price', 'desc')">Giá giảm</button>
+        <button onclick="handleSort('title', 'asc')">Tên A-Z</button>
+        <button onclick="handleSort('title', 'desc')">Tên Z-A</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Hình ảnh</th>
+                <th>Tên sản phẩm</th>
+                <th>Giá</th>
+                <th>Mô tả</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+            </tbody>
+    </table>
+
+    <div class="pagination" id="paginationControls">
+        </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
